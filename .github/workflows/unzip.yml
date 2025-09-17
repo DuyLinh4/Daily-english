@@ -1,0 +1,22 @@
+name: Unzip site
+
+on:
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Unzip
+        run: |
+          unzip daily_english_site.zip -d .
+          rm daily_english_site.zip
+      - name: Commit unzipped files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Unzipped site"
+          git push
